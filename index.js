@@ -25,7 +25,13 @@ function nuevoEmpleado(id,nombre,salario,empresa)
 }
 //arreglo que contendra a todos los empleados
 var empleados=[
-    {id:numeroDeEmpleados++,nombre:"mario",salario:"10000", empresa:"pjmop"},
+    {id:numeroDeEmpleados++,nombre:"mario martinez olivares",salario:"10000", empresa:"pjmop"},
+    {id:numeroDeEmpleados++,nombre:"mario martinez",salario:"20000", empresa:"pjmop"},
+    {id:numeroDeEmpleados++,nombre:"mario",salario:"30000", empresa:"pjmop"},
+    {id:numeroDeEmpleados++,nombre:"marco",salario:"40000", empresa:"pjmop1"},
+    {id:numeroDeEmpleados++,nombre:"marco martinez",salario:"50000", empresa:"pjmop1"},
+    {id:numeroDeEmpleados++,nombre:"oscar",salario:"40000", empresa:"platzi"},
+    {id:numeroDeEmpleados++,nombre:"oscar martinez",salario:"50000", empresa:"platzi"},
 ];
 //creacion de una fila
 const fila=document.createElement('tr');
@@ -41,56 +47,102 @@ const tabla=document.querySelector('.cuerpotabla');
 const agregar=document.querySelector('.botoningresar');
 //funcion que agrega nuevos empleados
 const funcionAgregar = () =>{
-    funcionLimpiarTabla()
+    funcionLimpiarTabla(empleados)
     empleados.push(new nuevoEmpleado(
     numeroDeEmpleados++,
     inputAgregar.value,
     inputSalario.value,
     inputEmpresa.value));
-    funcionMostrarEmpleados();
+    funcionMostrarEmpleados(empleados);
 };
 //evento de escucha de boton agregar
 agregar.addEventListener('click',funcionAgregar);
 
 //funcion para mostrar los empleados
-const funcionMostrarEmpleados= () => {
-    let arrEmpleados=empleados.forEach(item => {
-        //numeroDeEmpleados++;
+const funcionMostrarEmpleados= (arreglo) => {
+        arreglo.forEach(item => {
         tabla.innerHTML += 
         `<tr class=empleado${item.id}>`+
         "<td>"+item.nombre+"</td>"+
-        "<td>"+formatoSalario(item.salario)+"</td>"+
+        "<td class=salario>"+formatoSalario(item.salario)+"</td>"+
         "<td>"+item.empresa+"</td>"
         +"</tr>";
     })
 } 
 //LIMPIAR TABLA
-const funcionLimpiarTabla= () => {
-    for(let i=0;i<numeroDeEmpleados;i++)
-    {
-            let empleado=  document.querySelector(`tr.empleado${i}`)
-            tabla.removeChild(empleado)
-    }
+const funcionLimpiarTabla= (arreglo) => {
+    arreglo.forEach((empleado)=>{
+        let empleadoDom=  document.querySelector(`tr.empleado${empleado.id}`)
+        tabla.removeChild(empleadoDom)
+    })
 }
 //Buscar
-//boton buscar
-const buscar=document.querySelector('.botonbuscar');
+
 //campo de busqueda
 const inputBusqueda=document.querySelector('.campobuscar');
+var nombre= []
+var copiaFiltro=[]
 //funcion que busca empleados
-const funcionBuscar = () =>{
-    console.log('buscando')
-    var filtrosBusqueda = empleados.filter(empleado =>{
-        if(inputBusqueda.value===empleado.nombre)
-        return empleado.nombre
-        else if(inputBusqueda.value===empleado.empresa)
-        return empleado.empresa;
-    });
-    console.log(filtrosBusqueda);
-};
-//evento de escucha de busqueda
-buscar.addEventListener('click',funcionBuscar);
+const funcionBuscar = (e) =>{
+    let nombreCompleto='';
+    //console.log(e)
+    //verificamos si la tecla pulsada es borrar
+    if(e.key==="Backspace")
+    {
+        //sacamos del arreglo la ultima letra
+        nombre.pop()
+        //verificamos si el input esta vacio y si se presiona backspace entonces muestra todos los empleados
+        //si no eentonces
+        //comprueba si no hay nodos en la tabla ???
+        try{
+            if(tabla.hasChildNodes){
+                funcionLimpiarTabla(copiaFiltro)
+            }
+        }
+        catch(error){
 
+        }
+    }
+    //si no entonces si la tecla pulsada no es backspace entonces agrega el valor de la tecla al nombre
+    else{
+        nombre.push(e.key)
+        //si la tecla presionada es space entonces limpia la tabla
+        if(e.key===" ")
+        {
+            funcionLimpiarTabla(copiaFiltro)
+        }
+    }
+    //aqui se arma el nombre
+    nombre.forEach((letra)=>{
+        nombreCompleto +=letra;
+    })
+    console.log(nombreCompleto)
+    //aqui se hace una comparacion del nombre armado vs lo que se tiene en el arreglo de empleados y si coincide es regresado en un arreglo
+   var filtrosBusqueda = empleados.filter((empleado) =>{
+        if(nombreCompleto===empleado.nombre || nombreCompleto===empleado.empresa){
+            console.log("ha coincidido un registro")
+            return empleado
+        }
+    });
+//verificar si hay algun elemento hijo
+    if(tabla.hasChildNodes){
+        if(filtrosBusqueda.length === 0)
+        {
+            console.log('no hay nada para mostrar')
+        }else{
+                funcionMostrarEmpleados(filtrosBusqueda)
+                copiaFiltro = filtrosBusqueda.slice();
+        }
+    }
+};
+//evento de escucha de busqueda 
+inputBusqueda.addEventListener('keydown',funcionBuscar);
+inputBusqueda.addEventListener('focus', function(){
+    funcionLimpiarTabla(empleados)
+})
+inputBusqueda.addEventListener('blur', function(){
+    funcionMostrarEmpleados(empleados)
+})
 //Editar 
 //boton editar
 const editar=document.querySelector('.botoneditar');
@@ -102,15 +154,14 @@ const inputEditSalario= document.querySelector('.campoeditarsalario');
 //funcion editar
 const funcionEditar = ()  =>{
     var registroEditado= empleados.forEach(item => {
-        funcionLimpiarTabla()
+        funcionLimpiarTabla(empleados)
         if(item.nombre === inputNombreActual.value &&
             item.salario == inputSalarioActual.value)
             {
                 item.nombre = inputEditNombre.value;
                 item.salario = inputEditSalario.value;
-                console.log(`el nuevo registro es:${item.nombre} ${item.salario}`)
             }
-            funcionMostrarEmpleados()
+            funcionMostrarEmpleados(empleados)
     })
 };
 //evento de escucha de actualizar
@@ -120,7 +171,7 @@ editar.addEventListener('click',funcionEditar);
 const botonConvertirSalario=document.querySelector('.conversionDolares');
 //funcion de converison a dolares
 const funcionConversion  = () => {
-    funcionLimpiarTabla()
+    funcionLimpiarTabla(empleados)
     var recorreArray= empleados.forEach(item => {
         let salarioUSD=item.salario/21.50
         item.salario=salarioUSD;
@@ -140,5 +191,5 @@ const mostrarNoEmpleados= document.querySelector('.noEmpleados');
 const funcionNoEmpleados= () =>{
     mostrarNoEmpleados.innerHTML = `No empleados:${empleados.length}`;
 }
-funcionMostrarEmpleados();
+funcionMostrarEmpleados(empleados);
 setInterval(funcionNoEmpleados,2000);

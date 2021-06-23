@@ -2,5 +2,18 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    
+     
+}
+.cuerpotabla tr .salario{
+    font-family: monospace;
+    text-align: right;
+}
+.cuerpotabla tr:nth-child(odd){
+    background-color: #73B55B;
+}
+.cuerpotabla tr:nth-child(even){
+    background-color: #B45A81;
+}
+.cuerpotabla tr:hover{
+    background-color: #D4BA6A;
 }
