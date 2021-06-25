@@ -8,6 +8,12 @@
     font-family: monospace;
     text-align: right;
 }
+.cuerpotabla tr .salario-verde{
+    color: green;
+}
+.cuerpotabla tr .salario-rojo{
+    color: red;
+}
 .cuerpotabla tr:nth-child(odd){
     background-color: #73B55B;
 }
@@ -16,4 +22,14 @@
 }
 .cuerpotabla tr:hover{
     background-color: #D4BA6A;
+}
+.boton{
+    background-color: rgba(255, 255, 255, 0.5);
+    border: 3px solid green;
+    color: green;
+}
+.boton:hover{
+    transition: background-color 0.5s linear ;
+    background-color:green;
+    color: white;
 }
