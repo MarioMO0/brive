@@ -61,12 +61,24 @@ agregar.addEventListener('click',funcionAgregar);
 //funcion para mostrar los empleados
 const funcionMostrarEmpleados= (arreglo) => {
         arreglo.forEach(item => {
-        tabla.innerHTML += 
-        `<tr class=empleado${item.id}>`+
-        "<td>"+item.nombre+"</td>"+
-        "<td class=salario>"+formatoSalario(item.salario)+"</td>"+
-        "<td>"+item.empresa+"</td>"
-        +"</tr>";
+            if(item.salario > 10000)
+            {
+                tabla.innerHTML += 
+                `<tr class=empleado${item.id}>`+
+                "<td>"+item.nombre+"</td>"+
+                `<td class="salario salario-verde">`+formatoSalario(item.salario)+"</td>"+
+                "<td>"+item.empresa+"</td>"
+                +"</tr>";
+            }
+            else
+            {
+                tabla.innerHTML += 
+                `<tr class=empleado${item.id}>`+
+                "<td>"+item.nombre+"</td>"+
+                `<td class="salario salario-rojo">`+formatoSalario(item.salario)+"</td>"+
+                "<td>"+item.empresa+"</td>"
+                +"</tr>";
+            }
     })
 } 
 //LIMPIAR TABLA
@@ -76,8 +88,8 @@ const funcionLimpiarTabla= (arreglo) => {
         tabla.removeChild(empleadoDom)
     })
 }
-//Buscar
 
+//Buscar
 //campo de busqueda
 const inputBusqueda=document.querySelector('.campobuscar');
 var nombre= []
