@@ -1,38 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <link rel="stylesheet" href="/styles.css">
-    </head>
-    <body class="contenedor_principal">
-        <h2>Datos del empleado</h2>
-        <input class="campoIngresar" type="text" placeholder="nombre">
-        <input class="campoIngresarSal" type="number" placeholder="Salario">
-        <input class="campoIngresarEmpresa" type="text" placeholder="Empresa">
-        <button class="botoningresar">Ingresar</button>
-        <table class="tabla" id="tablagrande">
-            <thead>
-                <tr>
-                    <th>EMPLEADOS</th>
-                    <th>SALARIO</th>
-                    <th>EMPRESA</th>
-                    <th class="noEmpleados">No empleados: </th>
-                    <th>
-                        <input class="campobuscar" type="text" placeholder="nombre o empresa del empleado o empresa">
-                    </th>
-                </tr>
-            </thead>
-            <tbody class="cuerpotabla">
-            </tbody>
-        </table>
-        <input class="camponombreactual" type="text" placeholder="nombre actual del empleado">
-        <input class="camposalarioactual" type="text" placeholder="salario actual del empleado">
-        <input class="campoeditarnombre" type="text" placeholder="nuevo nombre del empleado">
-        <input class="campoeditarsalario" type="text" placeholder="nuevo salario del empleado">
-        <button class="botoneditar">Editar</button>
-        <button class="conversionDolares">USD</button>
-    </body>
-    <footer>
-        <script type="text/javascript" src="/index.js">
-        </script>
-    </footer>
+
+<head>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+
+<body class="contenedor_principal">
+    <div class="contenedor_nuevo_registro">
+        <h2>Mapachicon OuO</h2>
+        <input class="campoIngresar input_text" type="text" placeholder="nombre">
+        <input class="campoIngresarSal input_text" type="number" placeholder="Salario">
+        <input class="campoIngresarEmpresa input_text" type="text" placeholder="Empresa">
+        <button class="botoningresar boton input">Ingresar</button>
+    </div>
+    <table class="tabla" id="tablagrande">
+        <thead>
+            <tr>
+                <th class="titulo_tabla">FOTO</th>
+                <th class="titulo_tabla">EMPLEADOS</th>
+                <th class="titulo_tabla">SALARIO</th>
+                <th class="titulo_tabla">EMPRESA</th>
+                <th class="titulo_tabla">
+                        BUSQUEDA:
+                    <input class="campobuscar input_text" type="text" placeholder="nombre o empresa del empleado o empresa">
+                </th>
+                <th class="noEmpleados titulo_tabla">No empleados: </th>
+            </tr>
+        </thead>
+        <tbody class="cuerpotabla">
+        </tbody>
+    </table>
+    <div class="contenedor_edicion_registro">
+        <div class="campos">
+            <input class="camponombreactual  input_text" type="text" placeholder="nombre actual del empleado">
+            <input class="camposalarioactual  input_text" type="text" placeholder="salario actual del empleado">
+            <input class="campoeditarnombre  input_text" type="text" placeholder="nuevo nombre del empleado">
+            <input class="campoeditarsalario  input_text" type="text" placeholder="nuevo salario del empleado">
+        </div>
+        <div class="botones">
+            <button class="botoneditar boton input">Editar</button>
+            <button class="conversionDolares boton input">USD</button>
+        </div>
+    </div>
+    <!--- AQUI ESTA EL CODIGO HTML PARA TOMAR UNA FOTO -->
+    <div class="container disable">
+        <button id="cerrar">X</button>
+        <h3>Tomar una foto con JavaScript</h3>
+        <div class="app">
+            <a href="#" id="start-camera" class="visible">Iniciar Demo</a>
+            <video id="camera-stream" autoplay></video>
+            <img id="snap">
+            <p id="error-message"></p>
+            <div class="controls">
+                <a href="#" id="delete-photo" title="Eliminar Foto" class="disabled"><i
+                        class="material-icons">Eliminar</i></a>
+                <a href="#" id="take-photo" title="Tomar Foto"><i class="material-icons">Tomar foto</i></a>
+                <a href="#" id="save-photo" title="Descargar Foto" class="disabled"><i
+                        class="material-icons">Guardar</i></a>
+            </div>
+            <canvas></canvas>
+        </div>
+    </div>
+</body>
+<footer>
+    <script type="text/javascript" src="/index.js"></script>
+</footer>
+
 </html>
